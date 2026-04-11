@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: example_mart
+    description: >
+      Skeleton mart model — materialised as a table.
+      Rename to a domain-specific name (e.g., orders_daily, user_metrics)
+      and add your aggregations.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+      - name: _loaded_at
+        description: Propagated load timestamp from staging.

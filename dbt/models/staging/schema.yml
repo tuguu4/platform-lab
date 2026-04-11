@@ -1,0 +1,30 @@
+version: 2
+
+sources:
+  - name: raw
+    description: >
+      Raw data loaded into DuckDB from MinIO (s3://raw-data/).
+      Load files with:
+        CREATE OR REPLACE TABLE raw_sample AS
+        SELECT * FROM read_parquet('s3://raw-data/sample/*.parquet');
+    schema: main
+    tables:
+      - name: sample
+        description: Placeholder table — replace with your actual source.
+        columns:
+          - name: id
+            description: Primary key
+            tests:
+              - unique
+              - not_null
+
+models:
+  - name: stg_example
+    description: Skeleton staging model — rename and adapt for real source data.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+      - name: _loaded_at
+        description: Timestamp when the row was processed by dbt.

@@ -1,0 +1,38 @@
+# ── Environment & secrets ─────────────────────────────────────────
+.env
+*.env.local
+
+# ── Local data (DuckDB warehouse, raw files) ──────────────────────
+data/*
+!data/.gitkeep
+
+# DuckDB files anywhere in the tree
+*.duckdb
+*.duckdb.wal
+
+# ── Python ────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ── dbt ───────────────────────────────────────────────────────────
+dbt/target/
+dbt/dbt_packages/
+dbt/logs/
+
+# ── OS ────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── IDE ───────────────────────────────────────────────────────────
+.vscode/settings.json
+.idea/

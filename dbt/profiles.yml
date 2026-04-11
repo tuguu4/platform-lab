@@ -1,0 +1,36 @@
+# dbt connection profiles for Platform Lab
+#
+# Usage options:
+#   1. Copy to ~/.dbt/profiles.yml  (dbt default location)
+#   2. Run with:  dbt run --profiles-dir ./dbt
+#   3. Set env:   export DBT_PROFILES_DIR=$(pwd)/dbt
+#
+# NOTE: This file is committed for convenience (local-only credentials).
+#       Never store real production credentials here.
+
+platform_lab:
+  target: dev
+  outputs:
+
+    # ── Local DuckDB only — no MinIO required ──────────────────────
+    dev:
+      type: duckdb
+      path: "../data/warehouse.duckdb"
+      schema: main
+      threads: 4
+
+    # ── DuckDB + MinIO via httpfs & Iceberg ────────────────────────
+    s3:
+      type: duckdb
+      path: "../data/warehouse.duckdb"
+      schema: main
+      threads: 4
+      extensions:
+        - httpfs
+        - iceberg
+      settings:
+        s3_endpoint:          "{{ env_var('MINIO_ENDPOINT', 'localhost:9000') }}"
+        s3_access_key_id:     "{{ env_var('MINIO_ROOT_USER', 'minioadmin') }}"
+        s3_secret_access_key: "{{ env_var('MINIO_ROOT_PASSWORD', 'minioadmin') }}"
+        s3_use_ssl:           "false"
+        s3_url_style:         "path"
