@@ -85,6 +85,21 @@ mc ls local/
 mc cp myfile.parquet local/raw-data/
 ```
 
+## Smoke Test
+
+```bash
+pip install mcp duckdb groq python-dotenv   # once, on each workstation
+python test_stack.py
+```
+
+Seeds a `sales` table in DuckDB, then exercises all three MCP tools including Groq NL→SQL. All four steps should print and end with `All checks passed.`
+
+## Known Gotchas
+
+- **FastMCP SSE binding**: `FastMCP.run(transport="sse")` defaults to `127.0.0.1` — inaccessible from outside the container. The fix is in `server.py`: use `uvicorn.run(mcp.sse_app(), host="0.0.0.0", port=port)` instead. Do not pass `host`/`port` to `mcp.run()` — it doesn't accept them.
+- **Groq usage dashboard**: shows a delay of up to 60 min after API calls. If the smoke test passes, the API key is working even if the dashboard still reads 0.
+- **`docker-compose.yml` `version` field**: Compose V2 treats it as obsolete — keep it removed.
+
 ## Environment Variables
 
 | Variable | Required | Default | Description |
