@@ -88,7 +88,7 @@ services:
     ports:
       - "3000:3000"   # Web UI → http://localhost:3000
     environment:
-      MCP_URL: http://mcp-server:8000/sse
+      MCP_BASE_URL: http://mcp-server:8000
     depends_on:
       - mcp-server
     restart: unless-stopped
